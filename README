@@ -2,4 +2,5 @@
 - create a branch of DEV to create your changes
 - npm ci
 
-
+# Standard Practices
+At least one reviewer is required for each pull request. When pushing a commit, make sure to do git push origin DEV. Once the PR is approved, you'll then do a git push origin MAIN or merge via Github
