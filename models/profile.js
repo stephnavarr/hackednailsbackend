@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const reviewSchema = new Schema({
   rating: String,
   comment: String,
-  profile: [profileSchema],
+  profile: {type: Schema.Types.ObjectId, ref: 'Profile'},
 })
 
 const profileSchema = new Schema({
