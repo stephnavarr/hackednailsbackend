@@ -23,7 +23,7 @@ const show = async (req, res) => {
   try {
     const kit = await Kit.findById(req.params.id)
       .populate('owner')
-    res.status(200).json(pet)
+    res.status(200).json(kit)
   } catch (error) {
     res.status(500).json(err)
   }
@@ -46,7 +46,7 @@ const deleteKit = async (req,res) => {
   try {
     const kit = await Kit.findByIdAndDelete(req.params.id)
     const profile = await Profile.findById(req.user.profile)
-    profile.kits.remove({_id: req.params.id })
+    profile.kit.remove({_id: req.params.id })
     await profile.save()
     res.status(200).json(kit)
   } catch (error) {
