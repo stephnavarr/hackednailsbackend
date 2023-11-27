@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
-const saltRounds = 6
+const SALT_ROUNDS = 6
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -20,21 +20,21 @@ userSchema.set('toJSON', {
   }
 })
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', function (next) {
   const user = this
   if (!user.isModified('password')) return next()
-
-  try {
-    const hash = await bcrypt.hash(user.password, saltRounds)
+  bcrypt.hash(user.password, SALT_ROUNDS)
+  .then(hash => {
     user.password = hash
     next()
-  } catch (err) {
+  })
+  .catch(err => {
     next(err)
-  }
+  })
 })
 
-userSchema.methods.comparePassword = async function (tryPassword) {
-  return await bcrypt.compare(tryPassword, this.password)
+userSchema.methods.comparePassword = function (tryPassword, cb) {
+  bcrypt.compare(tryPassword, this.password, cb)
 }
 
 const User = mongoose.model('User', userSchema)
