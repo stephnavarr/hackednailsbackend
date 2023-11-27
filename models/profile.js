@@ -14,7 +14,7 @@ const profileSchema = new Schema({
   location: String,
   instagram: String,
   twitter: String,
-  nailTech: boolean,
+  nailTech: Boolean,
   review: [reviewSchema],
   kit: [{type: Schema.Types.ObjectId, ref: 'Kit'}]
 })
